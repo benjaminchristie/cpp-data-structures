@@ -120,6 +120,7 @@ public:
 		uint16_t cap = default_capacity << exponent;
 		T *p = ptr.getPointer();
 		p = static_cast<T *>(std::realloc(p, cap * sizeof(T)));
+		ptr.setPointer(p);
 	}
 
 	void push_back(const T &t) {
