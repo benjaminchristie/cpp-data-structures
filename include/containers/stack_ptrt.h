@@ -71,7 +71,7 @@ public:
 	inline T top() noexcept {
 		constexpr int _n_memb_stack = EXP48BP_STACK_SIZE(T);
 		constexpr int freePtrSize = EXP48BP_PTR_SIZE(T);
-#ifdef EXPSTACK_PREVENT_PAGE_RELOAD
+        #ifdef EXPSTACK_PREVENT_PAGE_RELOAD
 		uint32_t lower;
 		uint16_t upper;
 		if (index <= _n_memb_stack) {
@@ -84,14 +84,14 @@ public:
 		intptr_t raw = upper;
 		raw = raw << 32;
 		raw = raw | lower;
-#else
+        #else
 		intptr_t raw;
 		if (index <= _n_memb_stack) {
 			raw = *reinterpret_cast<intptr_t *>(stack_allocated_array + freePtrSize * (index - 1));
 		} else {
 			raw = *reinterpret_cast<intptr_t *>(heap_allocated_array + freePtrSize * (index - 1 - _n_memb_stack));
 		}
-#endif
+        #endif
 		T ptr = reinterpret_cast<T>(0x0000ffffffffffff & raw);
 		return ptr;
 	}

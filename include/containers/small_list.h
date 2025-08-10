@@ -9,7 +9,7 @@
 #include <cassert>
 
 /*
-implementation of list with maximum 4095 elements
+implementation of list with maximum 2047 elements
 that fits in a single pointer
 we use the padded pointer that sets the following flags
 in the top 16 bits of the pointer:
@@ -29,7 +29,7 @@ template <typename T> class SmallSizeList {
 private:
 	PointerWithStorage<T, uint16_t> ptr;
 	const static uint16_t default_capacity = 16;
-	const static uint64_t max_capacity = 16 << 0b0111; // 16 << 7 = 2048
+	const static uint64_t max_capacity = 16 << 0b0111;
 
 	inline uint16_t get_capacity_exponent() noexcept {
 		uint16_t storage = ptr.template getStorage<uint16_t>();
@@ -77,7 +77,6 @@ private:
 		storage = storage + 1;
 		ptr.setStorage(storage);
 		assert(exponent <= 0b0111);
-		assert(1 == 0);
 		uint16_t cap = default_capacity << exponent;
 		return cap;
 	}

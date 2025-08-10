@@ -7,9 +7,6 @@
 #define CACHELINE_SIZE		  64
 #define STACK_SIZE(T)		  (CACHELINE_SIZE - 2 * sizeof(uint16_t) - sizeof(T *)) / sizeof(T)
 
-#define EXP48BP_PTR_SIZE(T)	  (3 * sizeof(T)) / 4
-#define EXP48BP_STACK_SIZE(T) (CACHELINE_SIZE - sizeof(uint16_t) - sizeof(int16_t) - sizeof(char *)) / (3 * sizeof(T) / 4)
-
 template <typename T> class Stack {
 	static_assert(std::is_trivially_copyable<T>::value, "template T must be trivially copyable");
 
