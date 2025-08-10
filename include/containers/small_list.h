@@ -1,10 +1,10 @@
 #pragma once
 
 #include <climits>
+#include <containers/padded_pointer.h>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
-#include <containers/padded_pointer.h>
 
 #include <cassert>
 
@@ -22,6 +22,8 @@ capacity = 16 * 2^[~]
 note that we do not use the bottom bit of the upper 4 bits in the exponent,
 as if we did the maximum capacity would be 524288,
 but this does not fit in (~)
+
+Further note that this data structure does not have copy construction implemented
 */
 template <typename T> class SmallSizeList {
 private:
@@ -85,6 +87,10 @@ public:
 		T *p = static_cast<T *>(std::malloc(sizeof(T *) * default_capacity));
 		ptr = PointerWithStorage<T, uint16_t>(p, 0);
 	}
+
+	// TODO: implement copy constructor
+	SmallSizeList(const SmallSizeList &other) = delete;
+	SmallSizeList &operator=(const SmallSizeList &other) = delete;
 
 	~SmallSizeList() {
 		T *p = ptr.getPointer();
